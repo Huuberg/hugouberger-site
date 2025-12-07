@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sakura Paradise</title>
+<style>
+html,body{
+  margin:0;
+  height:100%;
+  overflow:hidden;
+  background:linear-gradient(180deg,#ffd7e6 0%,#ffe5f0 100%);
+  font-family:sans-serif;
+}
+
+/* Падающие лепестки */
+.petal{
+  position:absolute;
+  top:-40px;
+  width:40px;height:40px;
+  background:url('assets/sakura1.avif') no-repeat center/contain;
+  opacity:.8;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  0%{transform:translateY(0) rotate(0);}
+  100%{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* Кнопки */
+#musicBtn{
+  position:absolute;top:20px;right:20px;
+  border:2px solid #ff99cc;
+  background:rgba(255,255,255,.6);
+  border-radius:20px;
+  padding:8px 16px;
+  color:#ff0088;
+  cursor:pointer;
+  font-weight:bold;
+}
+#musicBtn:hover{background:rgba(255,255,255,.85);}
+
+#backBtn{
+  position:absolute;bottom:20px;left:20px;
+  background:none;border:none;cursor:pointer;
+}
+#backBtn svg{
+  width:60px;height:60px;
+  fill:#ffb6c1;
+  transition:transform .5s;
+}
+#backBtn:hover svg{transform:scale(1.2) rotate(20deg);}
+
+/* Возврат */
+#returnText{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  color:#ff69b4;font-size:2rem;font-weight:bold;
+  opacity:0;transition:opacity .8s ease;
+}
+
+/* Подсказка */
+#hint{
+  position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  background:rgba(255,255,255,.8);
+  padding:10px 20px;border-radius:10px;
+  color:#ff0088;font-weight:bold;
+  animation:blink 1.2s infinite alternate;
+}
+@keyframes blink{from{opacity:1;}to{opacity:.4;}}
+
+/* Эффект покачивания */
+@keyframes sway{
+  0%{transform:translateY(0) rotate(0deg);}
+  50%{transform:translateY(-10px) rotate(3deg);}
+  100%{transform:translateY(0) rotate(0deg);}
+}
+.sway{animation:sway 3s ease-in-out infinite;}
+
+/* 🌸 Подпись */
+#footerSignature {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  color: #ff69b4;
+  font-size: 14px;
+  font-weight: bold;
+  opacity: 0.6;
+  animation: breathe 4s ease-in-out infinite;
+}
+@keyframes breathe {
+  0% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.03); }
+  100% { opacity: 0.3; transform: scale(1); }
+}
+</style>
+</head>
+<body>
+
+<div id="hint">Click anywhere to enable sound 🎵</div>
+
+<audio id="bgMusic" preload="auto" loop>
+  <source src="assets/whispers-of-cherry-blossoms_92211.mp3" type="audio/mpeg">
+</audio>
+
+<button id="musicBtn">🎵 Music Off</button>
+
+<button id="backBtn" title="Back to Start">
+  <svg viewBox="0 0 100 100">
+    <path d="M50 0c15 20 25 30 25 50s-10 30-25 50C35 80 25 70 25 50S35 20 50 0z"/>
+  </svg>
+</button>
+
+<div id="returnText">Returning to HU...</div>
+
+<!-- 🌸 Подпись -->
+<div id="footerSignature">Sakura Paradise © 2025 — HU SYSTEM v3.0</div>
+
+<script>
+/* Подсказка исчезает при клике */
+document.addEventListener('click',()=>{const h=document.getElementById('hint');if(h)h.remove();},{once:true});
+
+/* Музыка */
+const m=document.getElementById("bgMusic");
+const btn=document.getElementById("musicBtn");
+btn.addEventListener("click",async()=>{
+  try{
+    if(m.paused){await m.play();btn.textContent="🔊 Music On";}
+    else{m.pause();btn.textContent="🎵 Music Off";}
+  }catch(e){console.warn("Music error:",e.message);}
+});
+
+/* Возврат */
+const back=document.getElementById("backBtn"),text=document.getElementById("returnText");
+back.addEventListener("click",()=>{
+  text.style.opacity=1;
+  document.body.style.transition="background 1s";
+  document.body.style.background="#ffff99";
+  setTimeout(()=>location.href="index.html",1500);
+});
+
+/* Движение котиков и цветов */
+const cats=['assets/cat.png','assets/cat2.jpeg'];
+const flower='assets/sakura1.avif';
+function rand(min,max){return Math.random()*(max-min)+min;}
+function fly(src,size=80){
+  const el=new Image();
+  el.src=src;el.className="sway";
+  el.style.position="absolute";
+  el.style.width=size+"px";
+  el.style.height=size+"px";
+  el.style.left=rand(0,window.innerWidth-size)+"px";
+  el.style.top=rand(0,window.innerHeight-size)+"px";
+  el.style.pointerEvents="none";
+  document.body.appendChild(el);
+  move(el);
+}
+function move(el){
+  const dur=rand(6000,12000);
+  const x=rand(0,window.innerWidth-100);
+  const y=rand(0,window.innerHeight-100);
+  el.animate([{transform:`translate(${x}px,${y}px)`}],{duration:dur,easing:"ease-in-out",fill:"forwards"}).onfinish=()=>move(el);
+}
+for(let i=0;i<6;i++)fly(cats[i%2],90);
+for(let i=0;i<10;i++)fly(flower,60);
+
+/* Лепестки */
+function petal(){
+  const p=document.createElement("div");
+  p.className="petal";
+  p.style.left=`${rand(0,100)}vw`;
+  p.style.animationDuration=`${rand(8,18)}s`;
+  document.body.appendChild(p);
+  setTimeout(()=>p.remove(),20000);
+}
+setInterval(petal,700);
+</script>
+</body>
+</html>
