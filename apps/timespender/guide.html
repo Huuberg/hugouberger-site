@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Time Spender — Complete user guide. Learn how to track activities, use parallel mode, view analytics and export PDF reports."/>
+  <title>User Guide — Time Spender</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0F172A; --surface: #1E293B; --border: rgba(255,255,255,0.08);
+      --accent: #FFEB3B; --text: #E2E8F0; --muted: #94A3B8; --dim: #475569;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 60px;
+      background: rgba(15,23,42,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-weight: 900; font-size: 16px; letter-spacing: 2px; color: var(--accent); text-decoration: none; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--accent); }
+
+    /* Page header */
+    .page-header {
+      padding: 56px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,235,59,0.06) 0%, transparent 70%);
+    }
+    .page-header .icon { font-size: 48px; margin-bottom: 14px; }
+    .page-header h1 { font-size: 36px; font-weight: 800; margin-bottom: 8px; }
+    .page-header p { color: var(--muted); font-size: 15px; }
+
+    /* Layout */
+    .layout { display: flex; max-width: 1000px; margin: 0 auto; gap: 32px; padding: 40px 24px 80px; }
+
+    /* Sidebar TOC */
+    .toc-sidebar {
+      width: 220px; flex-shrink: 0;
+      position: sticky; top: 80px; align-self: flex-start;
+    }
+    .toc-sidebar h3 { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: var(--dim); text-transform: uppercase; margin-bottom: 12px; }
+    .toc-sidebar a {
+      display: block; padding: 7px 12px; border-radius: 8px;
+      color: var(--muted); text-decoration: none; font-size: 13px;
+      transition: all .2s; margin-bottom: 2px;
+    }
+    .toc-sidebar a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .toc-sidebar a.active { color: var(--accent); background: rgba(255,235,59,0.08); }
+
+    /* Content */
+    .content { flex: 1; min-width: 0; }
+
+    section { margin-bottom: 60px; scroll-margin-top: 80px; }
+
+    .section-header {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 24px; padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .s-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: rgba(255,235,59,0.1); border: 1px solid rgba(255,235,59,0.2);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px;
+    }
+    .section-header h2 { font-size: 22px; font-weight: 700; }
+    .section-header small { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    .card {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px; margin-bottom: 14px;
+    }
+    .card h3 { font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+    .card p, .card li { font-size: 14px; color: var(--muted); line-height: 1.65; }
+    .card ul, .card ol { padding-left: 18px; margin-top: 6px; }
+    .card li { margin-bottom: 5px; }
+    .card strong { color: var(--text); }
+
+    .step { display: flex; gap: 14px; margin-bottom: 16px; align-items: flex-start; }
+    .step-n {
+      width: 30px; height: 30px; flex-shrink: 0;
+      background: var(--accent); color: #0F172A;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 13px; margin-top: 2px;
+    }
+    .step-t { font-size: 14px; color: #CBD5E1; line-height: 1.65; }
+    .step-t strong { color: var(--text); }
+
+    .tip {
+      background: rgba(255,235,59,0.05); border-left: 3px solid var(--accent);
+      border-radius: 0 10px 10px 0; padding: 12px 16px;
+      margin-top: 16px; font-size: 13px; color: var(--muted);
+    }
+    .tip strong { color: var(--accent); }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 28px 24px;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 12px; max-width: 900px; margin: 0 auto;
+      font-size: 13px; color: var(--dim);
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+    .footer-links { display: flex; gap: 20px; }
+
+    @media (max-width: 700px) {
+      .toc-sidebar { display: none; }
+      nav { padding: 0 16px; }
+      .nav-links { gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">TIMESPENDER</a>
+  <div class="nav-links">
+    <a href="guide.html" class="active">Guide</a>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="icon">📖</div>
+  <h1>User Guide</h1>
+  <p>Everything you need to know about Time Spender</p>
+</div>
+
+<div class="layout">
+  <!-- TOC -->
+  <aside class="toc-sidebar">
+    <h3>On this page</h3>
+    <a href="#overview">Overview</a>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#parallel">Parallel Mode</a>
+    <a href="#forgotten">Forgotten Activity</a>
+    <a href="#journal">Journal</a>
+    <a href="#analytics">Analytics & PDF</a>
+    <a href="#settings">Settings</a>
+    <a href="#tips">Tips & Tricks</a>
+  </aside>
+
+  <!-- Content -->
+  <main class="content">
+
+    <section id="overview">
+      <div class="section-header">
+        <div class="s-icon">📱</div>
+        <div><h2>Overview</h2><small>What is Time Spender?</small></div>
+      </div>
+      <div class="card">
+        <p><strong>Time Spender</strong> is a one-tap activity tracker for Android. Start a timer, live your day, and review exactly where your time went — no accounts, no subscriptions, all data stays on your device.</p>
+      </div>
+      <div class="card">
+        <h3>Four screens</h3>
+        <ul>
+          <li><strong>Dashboard</strong> — start/stop timers, see what's running</li>
+          <li><strong>Journal</strong> — full history grouped by day</li>
+          <li><strong>Analytics</strong> — charts and totals by day / week / month</li>
+          <li><strong>Settings</strong> — create and manage your activities</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="dashboard">
+      <div class="section-header">
+        <div class="s-icon">🏠</div>
+        <div><h2>Dashboard</h2><small>Starting & stopping timers</small></div>
+      </div>
+      <div class="step"><div class="step-n">1</div><div class="step-t">Open the app — you land on <strong>Dashboard</strong>.</div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-t">Activity tiles are grouped by category. <strong>Tap any tile</strong> to start the timer for that activity.</div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-t">The <strong>Active Timer card</strong> appears at the top — shows the name, icon and live elapsed time.</div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-t">Tap the <strong>red STOP button</strong> to end the session. It's saved automatically to your Journal.</div></div>
+      <div class="step"><div class="step-n">5</div><div class="step-t">Tapping a <strong>different activity</strong> while one is running stops the current one and starts the new one.</div></div>
+      <div class="tip"><strong>Tip:</strong> The timer keeps running in the background — close the app and come back later to stop it.</div>
+    </section>
+
+    <section id="parallel">
+      <div class="section-header">
+        <div class="s-icon">⚡</div>
+        <div><h2>Parallel Mode</h2><small>Track two things at once</small></div>
+      </div>
+      <div class="card">
+        <p>Listening to a podcast while cooking? Music while working? <strong>Parallel mode</strong> lets you track both without interrupting the main timer.</p>
+      </div>
+      <div class="step"><div class="step-n">1</div><div class="step-t">Start a <strong>main activity</strong> first (e.g. Work).</div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-t">A <strong>"Start Parallel"</strong> button appears in the Activities header. Tap it — it turns yellow.</div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-t">Tap any tile (e.g. Headphones). It starts as a parallel session — main timer continues unchanged.</div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-t">Parallel sessions appear below the main card, each with its own <strong>individual STOP button</strong>.</div></div>
+      <div class="tip"><strong>Note:</strong> Parallel activities are tracked separately in Journal and Analytics.</div>
+    </section>
+
+    <section id="forgotten">
+      <div class="section-header">
+        <div class="s-icon">➕</div>
+        <div><h2>Forgotten Activity</h2><small>Log something you missed</small></div>
+      </div>
+      <div class="step"><div class="step-n">1</div><div class="step-t">Tap the <strong>⊕ circle icon</strong> in the top-right of Dashboard or Journal.</div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-t">A panel slides up. <strong>Select the activity</strong> from the grid.</div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-t">Pick the <strong>date</strong>, then the <strong>start</strong> and <strong>end time</strong>.</div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-t">Enable <strong>Parallel Activity</strong> if it overlapped with something else.</div></div>
+      <div class="step"><div class="step-n">5</div><div class="step-t">Tap <strong>"Add Activity"</strong>. The app automatically adjusts any overlapping sessions.</div></div>
+    </section>
+
+    <section id="journal">
+      <div class="section-header">
+        <div class="s-icon">📒</div>
+        <div><h2>Journal</h2><small>Your complete history</small></div>
+      </div>
+      <div class="card">
+        <h3>Viewing history</h3>
+        <p>Sessions grouped by day, newest first. Each entry shows icon, name, start/end time, and duration.</p>
+      </div>
+      <div class="card">
+        <h3>Editing an entry</h3>
+        <p>Tap any entry to edit its <strong>end time</strong> — useful if you forgot to stop the timer.</p>
+      </div>
+      <div class="card">
+        <h3>Deleting an entry</h3>
+        <ul>
+          <li><strong>Swipe left</strong> on any entry.</li>
+          <li>Confirm deletion in the dialog.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="analytics">
+      <div class="section-header">
+        <div class="s-icon">📊</div>
+        <div><h2>Analytics & PDF Export</h2><small>Understand your patterns</small></div>
+      </div>
+      <div class="card">
+        <h3>Time periods</h3>
+        <ul>
+          <li><strong>Today</strong> — from midnight to now</li>
+          <li><strong>This Week</strong> — Monday through today</li>
+          <li><strong>This Month</strong> — 1st of the month through today</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Pie chart</h3>
+        <p>Each activity gets a coloured slice proportional to its share of your time. Percentages shown on slices &gt; 6%.</p>
+      </div>
+      <div class="card">
+        <h3>Export to PDF</h3>
+        <ul>
+          <li>Tap the <strong>PDF icon</strong> (top-right of Analytics).</li>
+          <li>The PDF includes period, total time, and full activity breakdown.</li>
+          <li>Share via email, save to files, or print.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="settings">
+      <div class="section-header">
+        <div class="s-icon">⚙️</div>
+        <div><h2>Settings</h2><small>Manage your activities</small></div>
+      </div>
+      <div class="card">
+        <h3>➕ Add new activity</h3>
+        <ul>
+          <li>Tap the <strong>yellow + button</strong> (bottom-right).</li>
+          <li>Enter name, choose group, pick colour and icon.</li>
+          <li>Tap <strong>"Create Activity"</strong>.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>✏️ Edit activity</h3>
+        <p>Tap the <strong>pencil icon</strong> on any row to edit name, group, colour or icon.</p>
+      </div>
+      <div class="card">
+        <h3>🗑 Delete activity</h3>
+        <ul>
+          <li><strong>Swipe left</strong> on any custom activity and confirm.</li>
+          <li>⚠️ All linked time entries are also deleted.</li>
+          <li>Default activities (marked "Default") cannot be deleted.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="tips">
+      <div class="section-header">
+        <div class="s-icon">💡</div>
+        <div><h2>Tips & Tricks</h2><small>Get the most out of the app</small></div>
+      </div>
+      <div class="card">
+        <h3>🔄 Build a habit</h3>
+        <p>Make starting a timer the first thing you do when switching tasks — even small ones like making coffee.</p>
+      </div>
+      <div class="card">
+        <h3>🌙 Track sleep</h3>
+        <p>Start <strong>Sleep</strong> before bed, stop it when you wake up. After a week, Analytics shows your sleep pattern clearly.</p>
+      </div>
+      <div class="card">
+        <h3>📤 Weekly review</h3>
+        <p>Every Monday, open Analytics → <strong>This Week</strong> and export a PDF. A simple habit to reflect and plan.</p>
+      </div>
+      <div class="card">
+        <h3>🎯 Use groups</h3>
+        <p>Assign activities to the right group — Work, Health, Leisure — to keep the Dashboard organised and Analytics easier to read.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <span>© 2025 <a href="https://www.hugouberger.com" target="_blank">HUU</a>. All rights reserved.</span>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="mailto:huuberger1@gmail.com">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>

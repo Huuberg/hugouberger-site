@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Time Spender Privacy Policy — your data stays on your device. No accounts, no tracking, no servers."/>
+  <title>Privacy Policy — Time Spender</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0F172A; --border: rgba(255,255,255,0.08);
+      --accent: #FFEB3B; --text: #E2E8F0; --muted: #94A3B8; --dim: #475569;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 60px;
+      background: rgba(15,23,42,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-weight: 900; font-size: 16px; letter-spacing: 2px; color: var(--accent); text-decoration: none; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--accent); }
+
+    .page-header {
+      padding: 56px 24px 40px; text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,235,59,0.05) 0%, transparent 70%);
+    }
+    .page-header .icon { font-size: 48px; margin-bottom: 14px; }
+    .page-header h1 { font-size: 36px; font-weight: 800; margin-bottom: 8px; }
+    .page-header p { color: var(--muted); font-size: 14px; }
+
+    /* Green privacy badge */
+    .privacy-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 16px; padding: 8px 18px;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3);
+      border-radius: 20px; color: #4ADE80; font-size: 13px; font-weight: 600;
+    }
+
+    main { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+
+    /* Summary boxes */
+    .summary-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px; margin-bottom: 48px;
+    }
+    .summary-box {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 14px; padding: 16px; text-align: center;
+    }
+    .summary-box .icon { font-size: 28px; margin-bottom: 8px; }
+    .summary-box h3 { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .summary-box p { font-size: 12px; color: var(--muted); }
+
+    section { margin-bottom: 40px; }
+    h2 {
+      font-size: 18px; font-weight: 700;
+      margin-bottom: 12px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      color: var(--accent);
+    }
+    p { font-size: 14px; color: var(--muted); margin-bottom: 12px; line-height: 1.7; }
+    ul { padding-left: 20px; margin-bottom: 12px; }
+    li { font-size: 14px; color: var(--muted); margin-bottom: 6px; line-height: 1.6; }
+    strong { color: var(--text); }
+    a { color: var(--accent); }
+
+    .highlight {
+      background: rgba(255,235,59,0.05); border: 1px solid rgba(255,235,59,0.15);
+      border-radius: 12px; padding: 16px 20px; margin: 20px 0;
+      font-size: 14px; color: #CBD5E1;
+    }
+    .highlight strong { color: var(--accent); }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 28px 24px;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 12px; max-width: 900px; margin: 0 auto;
+      font-size: 13px; color: var(--dim);
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+    .footer-links { display: flex; gap: 20px; }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 16px; }
+      .nav-links { gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">TIMESPENDER</a>
+  <div class="nav-links">
+    <a href="guide.html">Guide</a>
+    <a href="privacy.html" class="active">Privacy</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="icon">🛡️</div>
+  <h1>Privacy Policy</h1>
+  <p>Last updated: April 17, 2025</p>
+  <div class="privacy-badge">✓ &nbsp;Your data never leaves your device</div>
+</div>
+
+<main>
+
+  <!-- Quick summary -->
+  <div class="summary-grid">
+    <div class="summary-box">
+      <div class="icon">📵</div>
+      <h3>No Account Required</h3>
+      <p>Use the app without signing up or providing any personal info</p>
+    </div>
+    <div class="summary-box">
+      <div class="icon">📡</div>
+      <h3>No Data Collection</h3>
+      <p>We don't collect, transmit, or store your data on any server</p>
+    </div>
+    <div class="summary-box">
+      <div class="icon">🔒</div>
+      <h3>Local Storage Only</h3>
+      <p>All activity records live in a database on your phone only</p>
+    </div>
+    <div class="summary-box">
+      <div class="icon">🚫</div>
+      <h3>No Ads, No Tracking</h3>
+      <p>No analytics SDKs, no advertising networks, no trackers</p>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <strong>Short version:</strong> Time Spender is a fully offline app. It does not connect to the internet, does not collect personal data, and does not share anything with third parties. Your activity records are stored locally on your device only.
+  </div>
+
+  <section>
+    <h2>1. Who We Are</h2>
+    <p>Time Spender is developed and maintained by <strong>HUU</strong> (<a href="https://www.hugouberger.com" target="_blank">hugouberger.com</a>). If you have any questions about this policy, contact us at <a href="mailto:huuberger1@gmail.com">huuberger1@gmail.com</a>.</p>
+  </section>
+
+  <section>
+    <h2>2. Information We Collect</h2>
+    <p><strong>We collect no personal information.</strong> The app does not ask for your name, email, location, contacts, or any other personal data.</p>
+    <p>The only data the app creates is:</p>
+    <ul>
+      <li>Activity records you create yourself (activity name, start time, end time, duration)</li>
+      <li>Custom activity configurations you define (name, icon, colour, group)</li>
+    </ul>
+    <p>This data is stored in a local SQLite database on your device and <strong>never leaves your device</strong>.</p>
+  </section>
+
+  <section>
+    <h2>3. How We Use Your Data</h2>
+    <p>Your data is used solely to provide the app's functionality:</p>
+    <ul>
+      <li>Displaying your activity history in the Journal</li>
+      <li>Calculating and showing Analytics (charts, totals, breakdowns)</li>
+      <li>Generating PDF reports when you request an export</li>
+    </ul>
+    <p>No data is sent to us or any third party at any time.</p>
+  </section>
+
+  <section>
+    <h2>4. Internet Access</h2>
+    <p>The app requests internet permission solely to allow the <strong>"About App"</strong> and <strong>"Privacy Policy"</strong> links to open web pages in your browser, and to allow the PDF share sheet to function.</p>
+    <p>The app itself does not make any network requests. Your activity data is never transmitted over the internet.</p>
+  </section>
+
+  <section>
+    <h2>5. Third-Party Services</h2>
+    <p>Time Spender does <strong>not</strong> use any third-party services, SDKs, or libraries that collect data, including:</p>
+    <ul>
+      <li>No Google Analytics or Firebase Analytics</li>
+      <li>No advertising networks (AdMob or similar)</li>
+      <li>No crash reporting services</li>
+      <li>No social media SDKs</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>6. Data Storage & Security</h2>
+    <p>All data is stored in a SQLite database in the app's private storage directory on your device. This directory is only accessible to the Time Spender app and is protected by Android's standard app sandbox.</p>
+    <p>When you uninstall the app, all data is permanently deleted from your device.</p>
+  </section>
+
+  <section>
+    <h2>7. PDF Export</h2>
+    <p>When you use the PDF export feature, the app generates a PDF document on your device and opens the Android share sheet. You choose where to share or save it. The app does not upload or store the PDF anywhere — this action is entirely under your control.</p>
+  </section>
+
+  <section>
+    <h2>8. Children's Privacy</h2>
+    <p>Time Spender does not collect any personal data and is safe for users of all ages. We do not knowingly collect information from children under 13.</p>
+  </section>
+
+  <section>
+    <h2>9. Changes to This Policy</h2>
+    <p>If we update this Privacy Policy, we will update the "Last updated" date at the top of this page. We encourage you to review this page periodically. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+  </section>
+
+  <section>
+    <h2>10. Contact</h2>
+    <p>Questions about this Privacy Policy? Contact us:</p>
+    <ul>
+      <li>Email: <a href="mailto:huuberger1@gmail.com">huuberger1@gmail.com</a></li>
+      <li>Website: <a href="https://www.hugouberger.com" target="_blank">hugouberger.com</a></li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  <span>© 2025 <a href="https://www.hugouberger.com" target="_blank">HUU</a>. All rights reserved.</span>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="guide.html">User Guide</a>
+    <a href="mailto:huuberger1@gmail.com">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>

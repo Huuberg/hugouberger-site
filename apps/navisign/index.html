@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NAVISIGN — Professional Maritime Reference App</title>
+  <meta name="description" content="Signal flags, buoys, maritime messages and Morse code. Professional offline reference for sailors, navigators and yacht crews.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">NAVISIGN<span> app</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html" class="active">Home</a>
+      <a href="how.html">How It Works</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+    <button class="nav-hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-badge">Maritime Solutions</div>
+  <h1>NAVISIGN</h1>
+  <h2>PROFESSIONAL MARITIME REFERENCE</h2>
+  <p>
+    Your complete offline guide to maritime signals, navigation marks
+    and communication. Built for sailors, yacht crews and navigators worldwide.
+  </p>
+  <a href="https://play.google.com/store/apps/details?id=com.navisign.app" class="hero-cta">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.61 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.5,12.92 20.16,13.19L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/></svg>
+    Google Play
+  </a>
+</div>
+
+<!-- ── STATS ── -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-value">26</div>
+    <div class="stat-label">Signal Flags</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">8</div>
+    <div class="stat-label">Buoy Types</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">21</div>
+    <div class="stat-label">Messages</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">8</div>
+    <div class="stat-label">Languages</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">100%</div>
+    <div class="stat-label">Offline</div>
+  </div>
+</div>
+
+<!-- ── FEATURES ── -->
+<section>
+  <div class="section-title">Features</div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(0,229,255,0.1)">
+        <span style="color:var(--cyan)">&#9873;</span>
+      </div>
+      <h3>Signal Flags</h3>
+      <p>All 26 ICS flags (A&ndash;Z) with official meanings, visual patterns and letter codes</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(255,122,0,0.1)">
+        <span style="color:var(--orange)">&#9993;</span>
+      </div>
+      <h3>Maritime Messages</h3>
+      <p>21 standard signals: distress, medical, navigation, notice and greeting</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(29,158,117,0.1)">
+        <span style="color:var(--green)">&#9875;</span>
+      </div>
+      <h3>Buoys &amp; Marks</h3>
+      <p>8 IALA buoy types with action guidance and light characteristics</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(255,215,0,0.1)">
+        <span style="color:var(--gold)">&#183;&#8212;&#183;</span>
+      </div>
+      <h3>Morse Code</h3>
+      <p>Letters, digits, punctuation and 16 essential maritime signals</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── OFFLINE ── -->
+<section>
+  <div class="offline-banner">
+    <h3>&#9889; Works Fully Offline</h3>
+    <p>
+      No internet connection required. Use NAVISIGN anywhere &mdash;
+      at sea, in remote anchorages, or when roaming costs matter.
+      All reference data is stored locally on your device.
+    </p>
+  </div>
+</section>
+
+<!-- ── LANGUAGES ── -->
+<section>
+  <div class="section-title">8 Languages</div>
+  <div style="text-align:center; color:var(--muted); font-size:18px; letter-spacing:2px; line-height:2">
+    English &middot; &#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081; &middot; Fran&ccedil;ais &middot; Deutsch<br>
+    Espa&ntilde;ol &middot; Portugu&ecirc;s &middot; &#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577; &middot; &#20013;&#25991;
+  </div>
+</section>
+
+<!-- ── COMING SOON ── -->
+<section>
+  <div class="section-title">Coming Soon</div>
+  <div class="coming-soon-grid">
+    <div class="coming-item"><div class="dot"></div><span>AI Flag Recognition</span></div>
+    <div class="coming-item"><div class="dot"></div><span>Semaphore Alphabet</span></div>
+    <div class="coming-item"><div class="dot"></div><span>Ship Navigation Lights</span></div>
+    <div class="coming-item"><div class="dot"></div><span>VHF Radio Channels</span></div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="how.html">How It Works</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="mailto:navisign.dev@gmail.com">Contact</a>
+    </div>
+    <div class="footer-brand">
+      Powered by <a href="https://www.hugouberger.com" target="_blank" class="hhu">HHU</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 NAVISIGN. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
