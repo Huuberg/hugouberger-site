@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Web Apps — HUU</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0F172A;
+      color: #E2E8F0;
+      min-height: 100vh;
+    }
+
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 60px;
+      background: rgba(15,23,42,0.9);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .nav-logo { font-weight: 900; font-size: 18px; letter-spacing: 2px; color: #FFEB3B; text-decoration: none; }
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    nav a { color: #94A3B8; text-decoration: none; font-size: 14px; }
+    nav a:hover { color: #E2E8F0; }
+
+    .hero {
+      text-align: center;
+      padding: 64px 24px 48px;
+      background: radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255,235,59,0.07) 0%, transparent 70%);
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,235,59,0.1);
+      border: 1px solid rgba(255,235,59,0.25);
+      color: #FFEB3B;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    .hero h1 { font-size: 36px; font-weight: 800; margin-bottom: 10px; }
+    .hero h1 span { color: #FFEB3B; }
+    .hero p { color: #94A3B8; font-size: 15px; max-width: 500px; margin: 0 auto; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* App Card */
+    .app-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 28px;
+      transition: border-color .2s, transform .2s;
+    }
+    .app-card:hover { border-color: rgba(255,235,59,0.3); transform: translateY(-4px); }
+
+    .card-header {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
+    }
+    .app-icon-wrap {
+      width: 52px; height: 52px;
+      background: rgba(255,235,59,0.1);
+      border: 1px solid rgba(255,235,59,0.2);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+    }
+    .app-card h2 { font-size: 20px; font-weight: 800; color: #FFEB3B; }
+    .app-card .tagline { font-size: 12px; color: #64748B; margin-top: 2px; }
+
+    .platform-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(99,102,241,0.12);
+      border: 1px solid rgba(99,102,241,0.25);
+      color: #A5B4FC;
+      font-size: 11px; font-weight: 600;
+      padding: 3px 10px; border-radius: 20px;
+      margin-bottom: 14px;
+    }
+
+    .app-card p { font-size: 14px; color: #94A3B8; line-height: 1.6; margin-bottom: 16px; }
+
+    /* Feature list */
+    .features { list-style: none; margin-bottom: 20px; display: flex; flex-direction: column; gap: 7px; }
+    .features li {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; color: #CBD5E1;
+    }
+    .features li::before { content: '✓'; color: #FFEB3B; font-weight: 700; font-size: 12px; }
+
+    /* Install steps */
+    .install-steps {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .install-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      color: #475569; text-transform: uppercase; margin-bottom: 12px;
+    }
+    .install-step {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13px; color: #94A3B8; margin-bottom: 8px; line-height: 1.4;
+    }
+    .install-step:last-child { margin-bottom: 0; }
+    .step-num {
+      min-width: 20px; height: 20px;
+      background: rgba(255,235,59,0.15);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700; color: #FFEB3B;
+    }
+
+    /* Buttons */
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      padding: 8px 18px; border-radius: 10px;
+      font-size: 13px; font-weight: 600;
+      text-decoration: none; transition: opacity .2s;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn:hover { opacity: 0.8; }
+    .btn-primary { background: #FFEB3B; color: #0F172A; }
+    .btn-outline { background: transparent; color: #94A3B8; border: 1px solid rgba(255,255,255,0.15); }
+    .btn-disabled {
+      background: rgba(255,255,255,0.05);
+      color: #334155; border: 1px solid rgba(255,255,255,0.07);
+      cursor: not-allowed;
+    }
+
+    /* Coming soon card */
+    .app-card.coming-soon {
+      opacity: 0.6;
+      border-style: dashed;
+    }
+    .coming-soon-badge {
+      display: inline-block;
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.2);
+      color: #818CF8;
+      font-size: 10px; font-weight: 700; letter-spacing: 1px;
+      padding: 3px 10px; border-radius: 20px;
+      text-transform: uppercase; margin-bottom: 14px;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      text-align: center; padding: 24px;
+      font-size: 13px; color: #475569;
+    }
+    footer a { color: #FFEB3B; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">HUU</a>
+  <div class="nav-links">
+    <a href="/apps/">📱 Mobile Apps</a>
+    <a href="/">← Back to site</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">🌐 Web Apps</div>
+  <h1>Browser <span>Extensions</span></h1>
+  <p>Lightweight tools that work right inside your browser — no installation hassle, no account needed.</p>
+</div>
+
+<div class="grid">
+
+  <!-- Time Spender Extension -->
+  <div class="app-card">
+    <div class="card-header">
+      <div class="app-icon-wrap">⏱</div>
+      <div>
+        <h2>Time Spender</h2>
+        <div class="tagline">Know where your time goes</div>
+      </div>
+    </div>
+
+    <div class="platform-badge">🔵 Chrome Extension</div>
+
+    <p>Track your daily computer activities with one click. See where your time really goes — work, meetings, breaks, social media and more.</p>
+
+    <ul class="features">
+      <li>One-click timer — starts instantly from your browser bar</li>
+      <li>12 computer activities pre-configured</li>
+      <li>Daily & weekly analytics with bar charts</li>
+      <li>Timer runs in background when popup is closed</li>
+      <li>100% private — all data stored locally in your browser</li>
+      <li>No account, no sync, no tracking</li>
+    </ul>
+
+    <div class="install-steps">
+      <div class="install-title">How to install</div>
+      <div class="install-step">
+        <div class="step-num">1</div>
+        <div>Click <strong style="color:#E2E8F0">«Add to Chrome»</strong> in the Chrome Web Store</div>
+      </div>
+      <div class="install-step">
+        <div class="step-num">2</div>
+        <div>Confirm the installation — no permissions to worry about</div>
+      </div>
+      <div class="install-step">
+        <div class="step-num">3</div>
+        <div>Click the <strong style="color:#FFEB3B">⏱</strong> icon in your browser toolbar and start tracking!</div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <a href="https://chrome.google.com/webstore" class="btn btn-primary">🔵 Add to Chrome</a>
+      <a href="/apps/timespender/" class="btn btn-outline">📱 Mobile app</a>
+    </div>
+  </div>
+
+  <!-- MEDIUP — Coming Soon -->
+  <div class="app-card coming-soon">
+    <div class="card-header">
+      <div class="app-icon-wrap" style="background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.2);">🩺</div>
+      <div>
+        <h2 style="color:#818CF8;">MEDIUP</h2>
+        <div class="tagline">Your health companion</div>
+      </div>
+    </div>
+
+    <div class="coming-soon-badge">⏳ Coming soon</div>
+
+    <p>A browser extension to help you track your health routines, medications and wellness habits — right from your browser.</p>
+
+    <ul class="features">
+      <li>Medication reminders</li>
+      <li>Daily health habits tracker</li>
+      <li>Simple and private</li>
+    </ul>
+
+    <div class="btn-row">
+      <span class="btn btn-disabled">🔔 Coming soon</span>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 <a href="/">HUU</a>. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
