@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="MEDIUP — User Guide. Schedule media playback, set stop/start timers, manage playlists and journal."/>
+  <title>User Guide — MEDIUP</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0D0D1F; --surface: #1a1a2e; --border: rgba(255,255,255,0.08);
+      --accent: #6C5CE7; --accent2: #a89fd8; --text: #E2E8F0; --muted: #94A3B8; --dim: #475569;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 60px;
+      background: rgba(13,13,31,0.9); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-weight: 900; font-size: 16px; letter-spacing: 2px; color: var(--accent2); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--accent2); }
+
+    .page-header {
+      padding: 56px 24px 40px; text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(108,92,231,0.1) 0%, transparent 70%);
+    }
+    .page-header .icon { font-size: 48px; margin-bottom: 14px; }
+    .page-header h1 { font-size: 36px; font-weight: 800; margin-bottom: 8px; }
+    .page-header p { color: var(--muted); font-size: 15px; }
+
+    .layout { display: flex; max-width: 1000px; margin: 0 auto; gap: 32px; padding: 40px 24px 80px; }
+
+    .toc-sidebar {
+      width: 220px; flex-shrink: 0;
+      position: sticky; top: 80px; align-self: flex-start;
+    }
+    .toc-sidebar h3 { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: var(--dim); text-transform: uppercase; margin-bottom: 12px; }
+    .toc-sidebar a {
+      display: block; padding: 6px 10px; border-radius: 6px;
+      color: var(--muted); text-decoration: none; font-size: 13px;
+      transition: all .15s; border-left: 2px solid transparent;
+    }
+    .toc-sidebar a:hover { color: var(--text); background: rgba(255,255,255,0.04); border-left-color: var(--accent); }
+
+    .content { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 48px; }
+
+    section { scroll-margin-top: 80px; }
+    section h2 {
+      font-size: 22px; font-weight: 800; margin-bottom: 16px;
+      padding-bottom: 10px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
+    }
+    section h2 .sec-icon { font-size: 22px; }
+    section p { color: var(--muted); margin-bottom: 12px; font-size: 14px; }
+    section ul, section ol { padding-left: 20px; color: var(--muted); font-size: 14px; display: flex; flex-direction: column; gap: 6px; }
+    section li { line-height: 1.6; }
+
+    .step-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+    .step-list li {
+      display: flex; align-items: flex-start; gap: 14px;
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 16px;
+    }
+    .step-num {
+      width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+      background: var(--accent); color: #fff;
+      font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step-text { font-size: 14px; color: var(--muted); padding-top: 2px; }
+    .step-text b { color: var(--text); }
+
+    .feature-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+    .feature-card {
+      background: rgba(108,92,231,0.06); border: 1px solid rgba(108,92,231,0.2);
+      border-radius: 12px; padding: 16px;
+    }
+    .feature-card .f-icon { font-size: 24px; margin-bottom: 8px; }
+    .feature-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; color: var(--text); }
+    .feature-card p { font-size: 12px; color: var(--muted); margin: 0; }
+
+    .tab-cards { display: flex; flex-direction: column; gap: 16px; }
+    .tab-card {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px 24px;
+    }
+    .tab-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+    .tab-card p { font-size: 14px; color: var(--muted); margin: 0; }
+    .tab-card ul { margin-top: 8px; }
+
+    .tip-box {
+      background: rgba(108,92,231,0.08); border: 1px solid rgba(108,92,231,0.25);
+      border-radius: 10px; padding: 14px 18px;
+      font-size: 13px; color: var(--muted);
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .tip-box .tip-icon { font-size: 18px; flex-shrink: 0; }
+
+    .install-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: #fff;
+      text-decoration: none; font-weight: 700; font-size: 14px;
+      padding: 12px 24px; border-radius: 10px;
+      transition: opacity .2s; margin-top: 8px;
+    }
+    .install-btn:hover { opacity: 0.85; }
+
+    .coffee-section {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 16px; padding: 32px; text-align: center;
+    }
+    .coffee-section h2 { border: none; justify-content: center; padding: 0; margin-bottom: 12px; }
+    .coffee-section p { max-width: 440px; margin: 0 auto 20px; }
+    .coffee-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #FFDD00; color: #000;
+      text-decoration: none; font-weight: 800; font-size: 15px;
+      padding: 13px 28px; border-radius: 12px;
+      transition: opacity .2s;
+    }
+    .coffee-btn:hover { opacity: 0.85; }
+
+    footer {
+      text-align: center; padding: 32px;
+      border-top: 1px solid var(--border);
+      color: var(--dim); font-size: 13px;
+    }
+    footer a { color: var(--accent2); text-decoration: none; }
+
+    @media (max-width: 700px) {
+      .layout { flex-direction: column; }
+      .toc-sidebar { width: 100%; position: static; }
+      nav { padding: 0 16px; }
+      .nav-links { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/apps/mediup/">MEDI<span>UP</span></a>
+  <div class="nav-links">
+    <a href="/apps/mediup/guide.html" class="active">Guide</a>
+    <a href="/apps/mediup/privacy.html">Privacy</a>
+    <a href="/webapps/">← All Web Apps</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="icon">🎵</div>
+  <h1>MEDIUP User Guide</h1>
+  <p>Media scheduler and controller for your browser. Schedule playback, set timers, manage playlists.</p>
+</div>
+
+<div class="layout">
+
+  <!-- Sidebar TOC -->
+  <aside class="toc-sidebar">
+    <h3>Contents</h3>
+    <a href="#install">Installation</a>
+    <a href="#tabs">Four Tabs</a>
+    <a href="#now">▶ Now Playing</a>
+    <a href="#schedule">⏱ Schedule</a>
+    <a href="#journal">⊡ Journal</a>
+    <a href="#playlist">≡ Playlist</a>
+    <a href="#tips">Tips</a>
+    <a href="#support">Support</a>
+  </aside>
+
+  <!-- Main content -->
+  <div class="content">
+
+    <!-- Install -->
+    <section id="install">
+      <h2><span class="sec-icon">🔧</span> Installation</h2>
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text">Click <b>Add to Chrome</b> on the Chrome Web Store page</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text">Confirm the permissions — MEDIUP needs access to YouTube, Spotify and SoundCloud to control playback</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text">Pin the extension to your toolbar: click the <b>puzzle icon 🧩</b> → find MEDIUP → click the pin</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text">Open any YouTube or Spotify tab and start playing — then click the MEDIUP icon in your toolbar</div>
+        </li>
+      </ol>
+      <br/>
+      <div class="tip-box">
+        <div class="tip-icon">💡</div>
+        <div>After installing, <b>reload any open YouTube/Spotify tabs</b> (press F5) so MEDIUP can connect to them.</div>
+      </div>
+    </section>
+
+    <!-- Tabs overview -->
+    <section id="tabs">
+      <h2><span class="sec-icon">🗂</span> Four Tabs Overview</h2>
+      <div class="tab-cards">
+        <div class="tab-card">
+          <h3>▶ Now</h3>
+          <p>Shows the currently playing track — title, source, progress bar and timestamps. Set a <b>Stop timer</b> to pause at a specific time, and a <b>Resume timer</b> to start again automatically.</p>
+        </div>
+        <div class="tab-card">
+          <h3>⏱ Schedule</h3>
+          <p>Schedule a URL (YouTube video, Spotify track, etc.) to open and play at a specific time. Set volume, start time and optional stop time.</p>
+        </div>
+        <div class="tab-card">
+          <h3>⊡ Journal</h3>
+          <p>Automatically records everything you've played. Tap any entry to add it to your playlist. Clear all entries with one button.</p>
+        </div>
+        <div class="tab-card">
+          <h3>≡ Playlist</h3>
+          <p>Build a queue of tracks from your journal or by URL. Play the full playlist now or schedule it to run at a specific time with an auto-stop.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Now Playing -->
+    <section id="now">
+      <h2><span class="sec-icon">▶</span> Now Playing Tab</h2>
+      <p>When a video or track is playing in an open browser tab, MEDIUP automatically detects it and shows:</p>
+      <ul>
+        <li>🎵 Track title and source (YouTube / Spotify / SoundCloud)</li>
+        <li>📊 Progress bar with current time and total duration</li>
+        <li>🟢 Pulsing dot indicator when active</li>
+      </ul>
+      <br/>
+      <h3 style="font-size:15px; margin-bottom:10px; color: var(--text)">Stop Timer</h3>
+      <p>Choose an hour and minute → click <b>Set</b>. At that time, MEDIUP will automatically pause the media and send a desktop notification.</p>
+      <h3 style="font-size:15px; margin-bottom:10px; margin-top:16px; color: var(--text)">Resume Timer</h3>
+      <p>Set a time for playback to resume automatically. Great for wake-up music or scheduled listening sessions.</p>
+      <br/>
+      <div class="tip-box">
+        <div class="tip-icon">⏰</div>
+        <div>Timers work even when the popup is closed — the background service worker handles everything. You'll get a desktop notification when each timer fires.</div>
+      </div>
+    </section>
+
+    <!-- Schedule -->
+    <section id="schedule">
+      <h2><span class="sec-icon">⏱</span> Schedule Tab</h2>
+      <p>Schedule any media URL to open and play at a specific time:</p>
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text">Paste a URL into the input field — YouTube, Spotify, SoundCloud or any other media link</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text">Set <b>Launch time</b> (when to start) and optional <b>Stop time</b></div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text">Adjust <b>Volume</b> with the slider (0–100%)</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text">Click <b>Launch Now</b> to play immediately, or <b>Schedule</b> to queue for later</div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Journal -->
+    <section id="journal">
+      <h2><span class="sec-icon">⊡</span> Journal Tab</h2>
+      <p>The Journal automatically logs every track MEDIUP detects. Each entry shows the title, source and time it was played.</p>
+      <ul>
+        <li>Tap the <b>+ button</b> on any entry to add it to your Playlist</li>
+        <li>Use <b>Clear All</b> to wipe the journal history</li>
+      </ul>
+      <br/>
+      <div class="tip-box">
+        <div class="tip-icon">📖</div>
+        <div>The journal is stored locally in your browser — nothing is ever sent to a server.</div>
+      </div>
+    </section>
+
+    <!-- Playlist -->
+    <section id="playlist">
+      <h2><span class="sec-icon">≡</span> Playlist Tab</h2>
+      <p>Build a custom queue and play it in order:</p>
+      <ul>
+        <li>Add tracks from the <b>Journal</b> or paste a URL directly</li>
+        <li>Click <b>▶ Play Playlist</b> to start immediately</li>
+        <li>Or schedule the whole playlist with a start and stop time</li>
+        <li>MEDIUP advances to the next track automatically when one ends</li>
+      </ul>
+    </section>
+
+    <!-- Tips -->
+    <section id="tips">
+      <h2><span class="sec-icon">💡</span> Tips & Tricks</h2>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="tip-box">
+          <div class="tip-icon">😴</div>
+          <div><b>Sleep timer:</b> Set a Stop timer for bedtime — perfect for falling asleep to music or podcasts.</div>
+        </div>
+        <div class="tip-box">
+          <div class="tip-icon">⏰</div>
+          <div><b>Alarm clock:</b> Use Schedule to open a YouTube video at wake-up time. Set volume to 80–100%.</div>
+        </div>
+        <div class="tip-box">
+          <div class="tip-icon">🔄</div>
+          <div><b>Reload after install:</b> Always press F5 on YouTube/Spotify after installing or updating MEDIUP.</div>
+        </div>
+        <div class="tip-box">
+          <div class="tip-icon">📋</div>
+          <div><b>Playlist from journal:</b> Listened to some great tracks? Add them from the Journal to build a playlist for next time.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support -->
+    <section id="support">
+      <div class="coffee-section">
+        <h2><span class="sec-icon">☕</span> Support the Project</h2>
+        <p>MEDIUP is free and built with love. If it saves you time or brings you joy, a coffee helps keep it going!</p>
+        <a href="https://buymeacoffee.com/hugouberger" target="_blank" class="coffee-btn">☕ Buy me a coffee</a>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<footer>
+  <p>MEDIUP · Powered by <a href="https://hugouberger.com">HUU</a> · <a href="privacy.html">Privacy Policy</a></p>
+</footer>
+
+</body>
+</html>

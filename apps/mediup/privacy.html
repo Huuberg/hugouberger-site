@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="MEDIUP Privacy Policy — all data stays on your device. No accounts, no tracking, no servers."/>
+  <title>Privacy Policy — MEDIUP</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0D0D1F; --surface: #1a1a2e; --border: rgba(255,255,255,0.08);
+      --accent: #6C5CE7; --accent2: #a89fd8; --text: #E2E8F0; --muted: #94A3B8; --dim: #475569;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 60px;
+      background: rgba(13,13,31,0.9); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-weight: 900; font-size: 16px; letter-spacing: 2px; color: var(--accent2); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--accent2); }
+
+    .page-header {
+      padding: 56px 24px 40px; text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(108,92,231,0.08) 0%, transparent 70%);
+    }
+    .page-header .icon { font-size: 48px; margin-bottom: 14px; }
+    .page-header h1 { font-size: 36px; font-weight: 800; margin-bottom: 8px; }
+    .page-header p { color: var(--muted); font-size: 15px; }
+    .page-header .date { font-size: 12px; color: var(--dim); margin-top: 8px; }
+
+    .container { max-width: 740px; margin: 0 auto; padding: 48px 24px 80px; display: flex; flex-direction: column; gap: 40px; }
+
+    .highlight-box {
+      background: rgba(108,92,231,0.08); border: 1px solid rgba(108,92,231,0.25);
+      border-radius: 14px; padding: 24px 28px;
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .highlight-box .hl-icon { font-size: 32px; flex-shrink: 0; }
+    .highlight-box h3 { font-size: 17px; font-weight: 800; margin-bottom: 6px; }
+    .highlight-box p { color: var(--muted); font-size: 14px; margin: 0; }
+
+    section { display: flex; flex-direction: column; gap: 12px; }
+    section h2 {
+      font-size: 20px; font-weight: 800;
+      padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    }
+    section p { color: var(--muted); font-size: 14px; }
+    section ul { padding-left: 20px; color: var(--muted); font-size: 14px; display: flex; flex-direction: column; gap: 6px; }
+
+    .permission-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+    .permission-list li {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 16px;
+      font-size: 13px; color: var(--muted);
+    }
+    .permission-list li b { color: var(--text); }
+
+    footer {
+      text-align: center; padding: 32px;
+      border-top: 1px solid var(--border);
+      color: var(--dim); font-size: 13px;
+    }
+    footer a { color: var(--accent2); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/apps/mediup/">MEDI<span>UP</span></a>
+  <div class="nav-links">
+    <a href="/apps/mediup/guide.html">Guide</a>
+    <a href="/apps/mediup/privacy.html" class="active">Privacy</a>
+    <a href="/webapps/">← All Web Apps</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="icon">🔒</div>
+  <h1>Privacy Policy</h1>
+  <p>MEDIUP Chrome Extension</p>
+  <div class="date">Effective date: April 29, 2026</div>
+</div>
+
+<div class="container">
+
+  <div class="highlight-box">
+    <div class="hl-icon">🛡️</div>
+    <div>
+      <h3>Your data stays on your device</h3>
+      <p>MEDIUP stores all data (journal, playlists, timer settings) exclusively in your browser's local storage using <code>chrome.storage.local</code>. No data is ever sent to any external server, no account is required, and there is no tracking of any kind.</p>
+    </div>
+  </div>
+
+  <section>
+    <h2>1. What data MEDIUP stores</h2>
+    <p>MEDIUP stores the following data <strong>locally in your browser only</strong>:</p>
+    <ul>
+      <li><strong>Journal entries</strong> — titles and URLs of media you've played, stored locally for your reference</li>
+      <li><strong>Playlist</strong> — tracks you've manually added to your queue</li>
+      <li><strong>Timer settings</strong> — stop/start/schedule timers you've set (cleared after firing)</li>
+      <li><strong>Now Playing state</strong> — temporary cache of currently playing media info</li>
+    </ul>
+    <p>This data never leaves your device and can be cleared at any time from the Journal tab.</p>
+  </section>
+
+  <section>
+    <h2>2. Permissions explained</h2>
+    <ul class="permission-list">
+      <li><b>storage</b> — Saves your journal, playlist and timer data locally in your browser. No remote storage is used.</li>
+      <li><b>alarms</b> — Fires stop/start/schedule timers at the exact times you set, even when the popup is closed.</li>
+      <li><b>tabs</b> — Opens scheduled media URLs in browser tabs and navigates to the correct tab for playback control.</li>
+      <li><b>scripting</b> — Injects playback control scripts into YouTube, Spotify and SoundCloud tabs to play/pause media on your command.</li>
+      <li><b>notifications</b> — Shows desktop notifications when a timer fires (e.g. "Playback stopped at 23:00").</li>
+      <li><b>Host permissions (YouTube, Spotify, SoundCloud, all sites)</b> — Required to detect and control media playback. The generic host permission (<code>*://*/*</code>) allows MEDIUP to detect media on any website, not just the listed platforms.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>3. Data sharing</h2>
+    <p>MEDIUP does <strong>not</strong>:</p>
+    <ul>
+      <li>Collect, transmit or sell any user data</li>
+      <li>Use analytics or tracking services</li>
+      <li>Require account creation or login</li>
+      <li>Access your browsing history beyond detecting active media</li>
+      <li>Read or store the content of web pages you visit</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>4. Third-party services</h2>
+    <p>MEDIUP interacts with YouTube, Spotify and SoundCloud solely to control media playback (play, pause, volume). It does not access your accounts, playlists, subscriptions or any personal data from these services. All interaction happens locally via the browser tab.</p>
+  </section>
+
+  <section>
+    <h2>5. Children's privacy</h2>
+    <p>MEDIUP does not knowingly collect any information from anyone, including children under 13. As no data is collected at all, this extension is safe for all ages.</p>
+  </section>
+
+  <section>
+    <h2>6. Changes to this policy</h2>
+    <p>If this privacy policy changes, the updated version will be published at this URL with a new effective date. Significant changes will be noted in the Chrome Web Store release notes.</p>
+  </section>
+
+  <section>
+    <h2>7. Contact</h2>
+    <p>Questions about this privacy policy? Reach out via the support page or leave a review on the Chrome Web Store.</p>
+    <p><a href="https://hugouberger.com" style="color: var(--accent2);">hugouberger.com</a></p>
+  </section>
+
+</div>
+
+<footer>
+  <p>MEDIUP · Powered by <a href="https://hugouberger.com">HUU</a> · <a href="guide.html">User Guide</a></p>
+</footer>
+
+</body>
+</html>
