@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <!-- 🧭 SEO и мета-данные -->
-<title>HU SYSTEM — Gate Access Terminal</title>
-<meta name="description" content="HU SYSTEM — a mysterious access terminal. Enter the code to reveal what lies beyond.">
-<meta name="keywords" content="HU System, secret website, interactive art, mysterious site, Sakura Paradise, Hugo U. Berger">
+<title>HUU SYSTEM — Gate Access Terminal</title>
+<meta name="description" content="HUU SYSTEM — a mysterious access terminal. Enter the code to reveal what lies beyond.">
+<meta name="keywords" content="HUU System, secret website, interactive art, mysterious site, Sakura Paradise, Hugo U. Berger">
 <meta name="author" content="Hugo U. Berger">
 
 <!-- 🌐 Open Graph для соцсетей -->
-<meta property="og:title" content="HU SYSTEM — Gate Access Terminal">
+<meta property="og:title" content="HUU SYSTEM — Gate Access Terminal">
 <meta property="og:description" content="A secret interactive experience hidden in the digital void.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://hugouberger.com">
@@ -17,7 +17,7 @@
 
 <!-- 🪩 Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="HU SYSTEM — Gate Access Terminal">
+<meta name="twitter:title" content="HUU SYSTEM — Gate Access Terminal">
 <meta name="twitter:description" content="An interactive art project. Access restricted.">
 <meta name="twitter:image" content="https://hugouberger.com/assets/sakura1.avif">
 
@@ -26,7 +26,12 @@
 <link rel="apple-touch-icon" href="assets/cat.png">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HU</title>
+
+<!-- Bebas Neue для логотипа -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
   html, body {
     margin: 0;
@@ -40,103 +45,303 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-family: 'Arial Black', sans-serif;
-    font-weight: bold;
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.08em;
     text-align: center;
     color: #ffff00;
     animation: pulse 8s ease-in-out infinite;
+    user-select: none;
   }
 
   @media (min-width: 768px) {
-    .center-text { font-size: 8vw; }
+    .center-text { font-size: 13vw; }
   }
   @media (max-width: 767px) {
-    .center-text { font-size: 20vw; }
+    .center-text { font-size: 28vw; }
   }
 
+  /* HUU: одна пульсация за 8с, затухание до чёрного */
   @keyframes pulse {
-    0%, 100% { text-shadow: 0 0 60px rgba(255,255,0,0.9); color: #ffff00; }
-    50% { text-shadow: 0 0 5px rgba(255,255,0,0.15); color: rgba(255,255,0,0.2); }
+    0%, 100% {
+      text-shadow: 0 0 60px rgba(255,255,0,0.9);
+      color: #ffff00;
+      opacity: 1;
+    }
+    50% {
+      text-shadow: 0 0 0 rgba(0,0,0,0);
+      color: #000;
+      opacity: 0;
+    }
   }
 
-  .envelope {
-    position: absolute;
-    bottom: 25px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 38px;
-    height: 26px;
-    cursor: pointer;
-    animation: pulse 8s ease-in-out infinite;
+  /* Каждая кнопка зажигается на «своём» цикле HUU.
+     5 кнопок × 8с = 40с общий цикл. Кнопка N горит в свои 8с (1/5 = 20% цикла).
+     Пик в середине «своего» окна — совпадает с пиком HUU (HUU яркий в 0с и 8с каждого цикла). */
+  @keyframes btnGlow {
+    0%, 18%, 100% {
+      box-shadow: none;
+      background: transparent;
+      border-color: #dcdc00;
+    }
+    2%, 16% {
+      box-shadow: 0 0 22px rgba(255,255,0,0.7), 0 0 55px rgba(255,255,0,0.35), inset 0 0 10px rgba(255,255,0,0.25);
+      background: rgba(255,255,0,0.1);
+      border-color: #ffff00;
+    }
   }
-  .envelope svg {
-    width: 100%;
-    height: 100%;
+
+  /* Общий цикл 40с, стаггер по 8с (= 1 пульс HUU) на каждую из 5 кнопок. */
+  .blink-1 { animation: btnGlow 40s ease-in-out infinite; animation-delay: -8s; }
+  .blink-2 { animation: btnGlow 40s ease-in-out infinite; animation-delay: -16s; }
+  .blink-3 { animation: btnGlow 40s ease-in-out infinite; animation-delay: -24s; }
+  .blink-4 { animation: btnGlow 40s ease-in-out infinite; animation-delay: -32s; }
+  .blink-5 { animation: btnGlow 40s ease-in-out infinite; animation-delay: 0s; }
+
+  /* hover/active перебивают мерцание */
+  .circle-btn:hover,
+  .circle-btn:focus-visible,
+  .circle-btn:active {
+    animation: none;
+  }
+
+  /* Круглые кнопки (общий стиль) */
+  .circle-btn {
+    box-sizing: border-box;
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    min-height: 56px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1.5px solid #dcdc00;
+    color: #dcdc00;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1;
+    padding: 0;
+    transition: background 0.3s ease, box-shadow 0.4s ease, transform 0.3s ease, color 0.3s ease;
+    position: relative;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .circle-btn svg {
+    width: 22px;
+    height: 22px;
     stroke: #dcdc00;
     stroke-width: 2;
     fill: none;
-    transition: filter 0.3s;
+    transition: stroke 0.3s;
   }
-  .envelope:hover svg {
-    filter: drop-shadow(0 0 4px rgba(255,255,0,0.5));
+  .circle-btn:hover,
+  .circle-btn:focus-visible {
+    background: rgba(255,255,0,0.08);
+    box-shadow: 0 0 24px rgba(255,255,0,0.55), 0 0 60px rgba(255,255,0,0.25), inset 0 0 10px rgba(255,255,0,0.2);
+    transform: scale(1.08);
+    outline: none;
   }
-  @media (max-width: 767px) {
-    .envelope { width: 20px; height: 14px; bottom: 12px; }
+  .circle-btn:active {
+    background: rgba(255,255,0,0.18);
+    box-shadow: 0 0 36px rgba(255,255,0,0.85), 0 0 90px rgba(255,255,0,0.45), inset 0 0 14px rgba(255,255,0,0.35);
+    transform: scale(1.04);
   }
 
-  .door {
+  /* Ряд кнопок: симметрично по центру, между HUU и нижним краем */
+  .button-row {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 70px;
-    height: 140px;
-    background-color: #111;
-    box-shadow: -6px 0 15px rgba(255,255,0,0.7);
-    border: 2px solid #222;
-    transform-origin: right center;
-    transform: perspective(400px) rotateY(-25deg);
-    transition: all 0.4s ease;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
   }
-  .door::after {
-    content: '';
+  .button-row .row {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    justify-content: center;
+  }
+  .circle-btn.placeholder {
+    border-style: dashed;
+    border-color: rgba(220,220,0,0.45);
+    cursor: default;
+    pointer-events: none;
+  }
+
+  /* Email-кнопка ниже, по центру */
+  .envelope {
     position: absolute;
-    left: -10px;
-    top: 0;
-    width: 12px;
-    height: 100%;
-    background: linear-gradient(90deg, rgba(255,255,0,0.8) 0%, rgba(255,255,0,0.1) 100%);
-    filter: blur(3px);
-    opacity: 1;
-    transition: opacity 0.3s ease;
+    bottom: 38px;
+    left: 50%;
+    transform: translateX(-50%);
   }
-  .door.closed { transform: perspective(400px) rotateY(0deg); }
-  .door.closed::after { opacity: 0; }
-  .door.opened {
-    transform: perspective(400px) rotateY(-90deg);
-    box-shadow: -20px 0 40px rgba(255,255,0,1);
+  .envelope:hover {
+    transform: translateX(-50%) scale(1.08);
   }
-  .door.opened::after {
+  .envelope:active {
+    transform: translateX(-50%) scale(1.04);
+  }
+
+  @media (max-width: 767px) {
+    .circle-btn { width: 48px; height: 48px; min-width: 48px; min-height: 48px; font-size: 9px; }
+    .circle-btn svg { width: 18px; height: 18px; }
+    .button-row { bottom: 90px; gap: 18px; }
+    .envelope { bottom: 52px; }
+  }
+
+  /* Ярко-жёлтый свет в проёме двери (только в пределах проёма) */
+  .door-light {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 56px;
+    height: 130px;
+    background: linear-gradient(90deg, #ffff00 0%, #ffff66 60%, rgba(255,255,0,0.6) 100%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity 0.8s ease;
+  }
+  .door-light.on {
     opacity: 1;
-    background: linear-gradient(90deg, rgba(255,255,0,1) 0%, rgba(255,255,0,0.4) 100%);
   }
 
   @media (max-width: 1024px) {
-    .door { width: 35px; height: 70px; box-shadow: -3px 0 7px rgba(255,255,0,0.7); }
-    .door::after { left: -5px; width: 6px; }
+    .door-light { width: 36px; height: 86px; top: 16px; right: 16px; }
+  }
+
+  /* Дверь — ровный вертикальный прямоугольник */
+  .door {
+    z-index: 1;
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 56px;
+    height: 130px;
+    background-color: #0a0a0a;
+    border: 1.5px solid #5a5a00;
+    border-radius: 2px;
+    cursor: pointer;
+    transform-origin: right center;
+    transform: perspective(600px) rotateY(0deg);
+    box-shadow: 0 0 6px rgba(255,255,0,0.12), inset 0 0 4px rgba(255,255,0,0.05);
+    transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.6s ease;
+  }
+  .door:hover {
+    border-color: #c8c800;
+    box-shadow: 0 0 18px rgba(255,255,0,0.45), 0 0 50px rgba(255,255,0,0.2), inset 0 0 8px rgba(255,255,0,0.15);
+  }
+  /* Стадия charging — каждый клик усиливает свечение (4 нарастающих стадии) */
+  .door.charge-1 { border-color: #b8b800; box-shadow: 0 0 10px rgba(255,255,0,0.30), 0 0 18px rgba(255,255,0,0.10), inset 0 0 4px rgba(255,255,0,0.10); }
+  .door.charge-2 { border-color: #cccc00; box-shadow: 0 0 18px rgba(255,255,0,0.45), 0 0 32px rgba(255,255,0,0.18), inset 0 0 7px rgba(255,255,0,0.15); }
+  .door.charge-3 { border-color: #e6e600; box-shadow: 0 0 30px rgba(255,255,0,0.65), 0 0 55px rgba(255,255,0,0.28), inset 0 0 12px rgba(255,255,0,0.22); }
+  .door.charge-4 { border-color: #ffff44; box-shadow: 0 0 44px rgba(255,255,0,0.85), 0 0 80px rgba(255,255,0,0.40), inset 0 0 18px rgba(255,255,0,0.32); }
+
+  /* Клик-вспышка (при каждом нажатии) */
+  .door.click-pulse {
+    box-shadow: 0 0 50px rgba(255,255,0,0.95), 0 0 110px rgba(255,255,0,0.5), inset 0 0 22px rgba(255,255,0,0.5);
+    border-color: #ffffaa;
+  }
+
+  /* Дверь приоткрывается «внутрь» (распахивается от правого края в глубину) */
+  .door.opened {
+    transform: perspective(600px) rotateY(-72deg);
+    border-color: #ffff00;
+    box-shadow: -25px 0 60px rgba(255,255,0,0.9), 0 0 120px rgba(255,255,0,0.5), inset 0 0 30px rgba(255,255,0,0.6);
+    transition: transform 1.2s ease-in-out, box-shadow 1.2s ease-in-out, border-color 1.2s ease-in-out;
+  }
+  .door.opened::after {
+    content: '';
+    position: absolute;
+    left: -14px;
+    top: 0;
+    width: 14px;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,0,1) 0%, rgba(255,255,0,0.2) 100%);
+    filter: blur(4px);
+  }
+
+  @media (max-width: 1024px) {
+    .door { width: 36px; height: 86px; top: 16px; right: 16px; }
+  }
+
+  /* Footer (только подпись разработчика) */
+  .site-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 20px;
+    text-align: left;
+    z-index: 100;
+    font-family: 'JetBrains Mono', monospace;
+    pointer-events: none;
+  }
+  .site-footer .name {
+    font-size: 11px;
+    color: #444;
   }
 </style>
 </head>
 <body>
 
+<div class="door-light"></div>
 <div class="door"></div>
-<div class="center-text">HU</div>
+<div class="center-text">HUU</div>
 
-<div class="envelope" onclick="openMail()">
-  <svg viewBox="0 0 100 70">
-    <rect x="5" y="5" width="90" height="60" rx="2" ry="2"/>
-    <polyline points="5,5 50,38 95,5"/>
+<!-- Кнопки между HUU и email -->
+<nav class="button-row" aria-label="Primary">
+  <div class="row">
+    <a class="circle-btn blink-1" href="https://google.com" target="_blank" rel="noopener" title="Search">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="6.5"/>
+        <line x1="15.6" y1="15.6" x2="20" y2="20"/>
+      </svg>
+    </a>
+  </div>
+  <div class="row">
+    <a class="circle-btn blink-2" href="/apps/" title="Mobile Apps">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="6" y="2.5" width="12" height="19" rx="2.5" ry="2.5"/>
+        <line x1="10.5" y1="18.5" x2="13.5" y2="18.5"/>
+      </svg>
+    </a>
+    <a class="circle-btn blink-3" href="/webapps/" title="Web Apps">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"/>
+        <ellipse cx="12" cy="12" rx="4" ry="9"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+      </svg>
+    </a>
+    <a class="circle-btn blink-4" href="https://buymeacoffee.com/hugouberger" title="Support" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 9h12v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9z"/>
+        <path d="M17 11h2a2.5 2.5 0 0 1 0 5h-2"/>
+        <path d="M8 6c0-1 1-1 1-2M11 6c0-1 1-1 1-2M14 6c0-1 1-1 1-2"/>
+      </svg>
+    </a>
+  </div>
+</nav>
+
+<button class="circle-btn envelope blink-5" type="button" onclick="openMail()" title="Contact" aria-label="Contact">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <rect x="2" y="4" width="20" height="16" rx="1" ry="1"/>
+    <polyline points="2,4 12,13 22,4"/>
   </svg>
-</div>
+</button>
 
 <script>
 function openMail() {
@@ -148,39 +353,38 @@ function openMail() {
 const door = document.querySelector('.door');
 let clickCount = 0;
 const clicksToOpen = 13;
-const nextPageURL = "page2.html"; // переход на вторую страницу
+const nextPageURL = "page2.html";
 
 function handleDoorClick() {
+  if (door.classList.contains('opened')) return;
   clickCount++;
-  if (clickCount < clicksToOpen) {
-    door.style.transform = "perspective(400px) rotateY(-22deg)";
+
+  // Ступени «зарядки» свечения по счётчику (4 стадии до полного открытия)
+  door.classList.remove('charge-1','charge-2','charge-3','charge-4');
+  if (clickCount >= 11) door.classList.add('charge-4');
+  else if (clickCount >= 8) door.classList.add('charge-3');
+  else if (clickCount >= 5) door.classList.add('charge-2');
+  else if (clickCount >= 1) door.classList.add('charge-1');
+
+  // Короткая вспышка на каждый клик
+  door.classList.add('click-pulse');
+  setTimeout(() => door.classList.remove('click-pulse'), 180);
+
+  if (clickCount >= clicksToOpen) {
     setTimeout(() => {
-      door.style.transform = "perspective(400px) rotateY(-25deg)";
-    }, 100);
-  } else if (clickCount === clicksToOpen) {
-    door.classList.add('opened');
-    setTimeout(() => {
-      window.location.href = nextPageURL;
-    }, 2000);
+      document.querySelector('.door-light').classList.add('on');
+      door.classList.add('opened');
+      setTimeout(() => { window.location.href = nextPageURL; }, 2000);
+    }, 200);
   }
 }
 
-door.addEventListener('mouseenter', () => door.classList.add('closed'));
-door.addEventListener('mouseleave', () => door.classList.remove('closed'));
-door.addEventListener('touchstart', () => door.classList.add('closed'));
-door.addEventListener('touchend', () => door.classList.remove('closed'));
 door.addEventListener('click', handleDoorClick);
-door.addEventListener('touchstart', handleDoorClick);
 </script>
 
 <!-- Developer info for search engines and reviewers -->
-<div style="position:fixed;bottom:0;left:0;right:0;background:rgba(0,0,0,0.85);border-top:1px solid rgba(255,255,0,0.15);padding:8px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;z-index:100;">
-  <span style="font-family:monospace;font-size:11px;color:#555;">Hugo Uberger — Indie Developer</span>
-  <div style="display:flex;gap:16px;">
-    <a href="/apps/" style="font-family:monospace;font-size:11px;color:#888;text-decoration:none;" onmouseover="this.style.color='#FFEB3B'" onmouseout="this.style.color='#888'">📱 Mobile Apps</a>
-    <a href="/webapps/" style="font-family:monospace;font-size:11px;color:#888;text-decoration:none;" onmouseover="this.style.color='#FFEB3B'" onmouseout="this.style.color='#888'">🌐 Web Apps</a>
-    <a href="https://buymeacoffee.com/hugouberger" style="font-family:monospace;font-size:11px;color:#888;text-decoration:none;" onmouseover="this.style.color='#FFEB3B'" onmouseout="this.style.color='#888'">☕ Support</a>
-  </div>
+<div class="site-footer">
+  <span class="name">Hugo Uberger — Indie Developer</span>
 </div>
 </body>
 </html>
