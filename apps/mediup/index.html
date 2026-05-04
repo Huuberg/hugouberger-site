@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="MEDIUP — Media scheduler for your browser. Schedule YouTube & Spotify playback, set sleep timers, manage playlists."/>
+  <meta name="description" content="MEDIUP — Media scheduler for Android & Chrome. Set sleep timers, schedule playback, manage playlists and track listening history."/>
   <title>MEDIUP — Schedule your media</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml"/>
   <style>
@@ -11,6 +11,7 @@
     :root {
       --bg: #0D0D1F; --surface: #1a1a2e; --border: rgba(255,255,255,0.08);
       --accent: #6C5CE7; --accent2: #a89fd8; --text: #E2E8F0; --muted: #94A3B8; --dim: #475569;
+      --green: #4ADE80; --yellow: #FFE600;
     }
     html { scroll-behavior: smooth; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
@@ -35,16 +36,21 @@
       background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(108,92,231,0.12) 0%, transparent 70%);
       text-align: center; position: relative; overflow: hidden;
     }
-    .hero-inner { max-width: 640px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+    .hero-inner { max-width: 680px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+    .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
       background: rgba(108,92,231,0.12); border: 1px solid rgba(108,92,231,0.3);
       color: var(--accent2); font-size: 11px; font-weight: 700;
       letter-spacing: 2px; padding: 5px 16px; border-radius: 20px; text-transform: uppercase;
     }
+    .hero-badge.android {
+      background: rgba(74,222,128,0.1); border-color: rgba(74,222,128,0.3);
+      color: var(--green);
+    }
     .hero h1 { font-size: 58px; font-weight: 900; line-height: 1.05; letter-spacing: -2px; }
     .hero h1 span { color: var(--accent); }
-    .hero p { font-size: 18px; color: var(--muted); max-width: 480px; line-height: 1.6; }
+    .hero p { font-size: 18px; color: var(--muted); max-width: 520px; line-height: 1.6; }
     .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
     .btn-primary {
       display: inline-flex; align-items: center; gap: 8px;
@@ -53,6 +59,13 @@
       padding: 13px 28px; border-radius: 12px; transition: opacity .2s;
     }
     .btn-primary:hover { opacity: 0.85; }
+    .btn-android {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--green); color: #000;
+      text-decoration: none; font-weight: 700; font-size: 15px;
+      padding: 13px 28px; border-radius: 12px; transition: opacity .2s;
+    }
+    .btn-android:hover { opacity: 0.85; }
     .btn-secondary {
       display: inline-flex; align-items: center; gap: 8px;
       background: rgba(255,255,255,0.05); border: 1px solid var(--border);
@@ -60,6 +73,21 @@
       padding: 13px 28px; border-radius: 12px; transition: all .2s;
     }
     .btn-secondary:hover { background: rgba(255,255,255,0.09); }
+
+    /* Platform tabs */
+    .platform-switch {
+      display: flex; gap: 0; border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--border); margin-bottom: 24px;
+    }
+    .platform-tab {
+      flex: 1; padding: 14px 24px; text-align: center;
+      background: rgba(255,255,255,0.03); cursor: pointer;
+      font-size: 14px; font-weight: 700; color: var(--muted);
+      border: none; transition: all .2s;
+    }
+    .platform-tab:first-child { border-right: 1px solid var(--border); }
+    .platform-tab.active { background: rgba(108,92,231,0.15); color: var(--accent2); }
+    .platform-tab.active.android-active { background: rgba(74,222,128,0.1); color: var(--green); }
 
     /* Features */
     .section { padding: 80px 24px; max-width: 1000px; margin: 0 auto; }
@@ -76,6 +104,13 @@
     .feature-card .icon { font-size: 28px; margin-bottom: 12px; }
     .feature-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
     .feature-card p { font-size: 13px; color: var(--muted); }
+    .feature-card.pro { position: relative; }
+    .feature-card.pro::after {
+      content: 'PRO'; position: absolute; top: 12px; right: 12px;
+      background: rgba(255,230,0,0.15); border: 1px solid rgba(255,230,0,0.4);
+      color: var(--yellow); font-size: 9px; font-weight: 800;
+      padding: 2px 8px; border-radius: 10px; letter-spacing: 1px;
+    }
 
     /* How it works */
     .steps { display: flex; flex-direction: column; gap: 16px; }
@@ -100,6 +135,34 @@
       border-radius: 30px; padding: 8px 20px;
       font-size: 14px; font-weight: 600; color: var(--muted);
       display: flex; align-items: center; gap: 8px;
+    }
+
+    /* Pricing */
+    .pricing-section {
+      padding: 80px 24px; max-width: 800px; margin: 0 auto;
+    }
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .price-card {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 18px; padding: 32px 28px;
+    }
+    .price-card.pro {
+      background: rgba(108,92,231,0.08); border-color: rgba(108,92,231,0.35);
+    }
+    .price-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+    .price-card .price { font-size: 28px; font-weight: 900; color: var(--accent); margin-bottom: 16px; }
+    .price-card.pro .price { color: var(--yellow); }
+    .price-card ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+    .price-card li { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+    .price-card li::before { content: '✓'; color: var(--green); font-weight: 700; }
+    .price-card.pro li.highlight { color: var(--text); font-weight: 600; }
+
+    /* Languages */
+    .lang-list { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 16px; }
+    .lang-pill {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      border-radius: 20px; padding: 5px 14px;
+      font-size: 12px; color: var(--muted);
     }
 
     /* Coffee */
@@ -130,6 +193,7 @@
       .hero h1 { font-size: 38px; }
       nav { padding: 0 16px; }
       .nav-links { gap: 14px; }
+      .pricing-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -140,67 +204,151 @@
   <div class="nav-links">
     <a href="guide.html">Guide</a>
     <a href="privacy.html">Privacy</a>
-    <a href="/webapps/">← Web Apps</a>
+    <a href="/apps/">← Apps</a>
   </div>
 </nav>
 
 <!-- Hero -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-badge">🎵 Chrome Extension</div>
+    <div class="hero-badges">
+      <div class="hero-badge android">📱 Android App</div>
+      <div class="hero-badge">🧩 Chrome Extension</div>
+    </div>
     <h1>Schedule your<br><span>media.</span></h1>
-    <p>Control YouTube, Spotify & any media player from your browser toolbar. Set timers, build playlists, schedule playback.</p>
+    <p>Control playback with timers and schedules. Stop music at bedtime, wake up to a podcast, track listening history and build playlists.</p>
     <div class="hero-btns">
-      <a href="https://chromewebstore.google.com/detail/mediup/oncgbbpcdgjpecklhhkjnmjclbakbggj" class="btn-primary">🧩 Add to Chrome — Free</a>
-      <a href="guide.html" class="btn-secondary">📖 User Guide</a>
+      <a href="#" class="btn-android">📱 Get on Google Play</a>
+      <a href="https://chromewebstore.google.com/detail/mediup/oncgbbpcdgjpecklhhkjnmjclbakbggj" class="btn-primary">🧩 Add to Chrome</a>
+      <a href="guide.html" class="btn-secondary">📖 Guide</a>
     </div>
   </div>
 </section>
 
-<!-- Features -->
+<!-- Android Features -->
 <div class="section">
-  <div class="section-title">Everything you need</div>
-  <div class="section-sub">Four powerful tabs, one lightweight extension.</div>
+  <div class="section-title">Android App</div>
+  <div class="section-sub">Full media scheduler in your pocket. Control any media player on your phone.</div>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="icon">⏹</div>
+      <h3>Stop Timer</h3>
+      <p>Pause any media after a set delay or at an exact time. Perfect sleep timer.</p>
+    </div>
+    <div class="feature-card pro">
+      <div class="icon">▶</div>
+      <h3>Start Timer</h3>
+      <p>Resume playback at a specific time. Works as a media alarm clock.</p>
+    </div>
+    <div class="feature-card pro">
+      <div class="icon">🗓</div>
+      <h3>Schedule</h3>
+      <p>Paste YouTube, Spotify or any URL — it opens automatically at the set time.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">📖</div>
+      <h3>Journal</h3>
+      <p>Automatic history of everything you play. Stats for today, week and total.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🎵</div>
+      <h3>Playlist</h3>
+      <p>Build a queue from your journal or any URL.</p>
+    </div>
+    <div class="feature-card pro">
+      <div class="icon">🔉</div>
+      <h3>Fade Out</h3>
+      <p>Gradually lower volume before stopping. Smooth transition to silence.</p>
+    </div>
+    <div class="feature-card pro">
+      <div class="icon">🌙</div>
+      <h3>Sleep Mode</h3>
+      <p>Dims the screen after stopping playback. No bright flash when you're falling asleep.</p>
+    </div>
+    <div class="feature-card pro">
+      <div class="icon">🔁</div>
+      <h3>Repeat Cycle</h3>
+      <p>Stop and start in a loop at set intervals. Great for study/break cycles.</p>
+    </div>
+  </div>
+
+  <!-- Languages -->
+  <div style="text-align:center; margin-top: 48px;">
+    <div style="color: var(--muted); font-size: 14px; font-weight: 700; margin-bottom: 12px;">🌍 Available in 11 languages</div>
+    <div class="lang-list">
+      <span class="lang-pill">🇬🇧 English</span>
+      <span class="lang-pill">🇷🇺 Russian</span>
+      <span class="lang-pill">🇩🇪 German</span>
+      <span class="lang-pill">🇫🇷 French</span>
+      <span class="lang-pill">🇪🇸 Spanish</span>
+      <span class="lang-pill">🇵🇹 Portuguese</span>
+      <span class="lang-pill">🇮🇹 Italian</span>
+      <span class="lang-pill">🇨🇳 Chinese</span>
+      <span class="lang-pill">🇯🇵 Japanese</span>
+      <span class="lang-pill">🇰🇷 Korean</span>
+      <span class="lang-pill">🇸🇦 Arabic</span>
+    </div>
+  </div>
+</div>
+
+<!-- Pricing (Android) -->
+<div class="pricing-section">
+  <div class="section-title" style="text-align:center;">Free & PRO</div>
+  <div class="section-sub" style="text-align:center;">Start free, upgrade when you need more.</div>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <h3>Free</h3>
+      <div class="price" style="color: var(--muted);">$0</div>
+      <ul>
+        <li>Stop timer (countdown mode)</li>
+        <li>Quick stop: 15m & 30m</li>
+        <li>1 scheduled item</li>
+        <li>7-day journal history</li>
+        <li>Up to 5 playlist tracks</li>
+        <li>Today stats</li>
+      </ul>
+    </div>
+    <div class="price-card pro">
+      <h3 style="color: var(--yellow);">PRO</h3>
+      <div class="price">$2.99</div>
+      <ul>
+        <li class="highlight">All timer modes (at time, start)</li>
+        <li class="highlight">Fade out, sleep mode, repeat cycle</li>
+        <li class="highlight">All quick stop presets</li>
+        <li class="highlight">Unlimited schedules</li>
+        <li class="highlight">Full journal history & stats</li>
+        <li class="highlight">Unlimited playlist</li>
+        <li class="highlight">Floating overlay button</li>
+        <li class="highlight">No ads</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Chrome Extension -->
+<div class="section" style="padding-top: 0">
+  <div class="section-title">Chrome Extension</div>
+  <div class="section-sub">Same power, right in your browser toolbar. 100% free.</div>
   <div class="feature-grid">
     <div class="feature-card">
       <div class="icon">▶</div>
       <h3>Now Playing</h3>
-      <p>See what's playing across all your tabs — title, source and progress bar in real time.</p>
+      <p>See what's playing across all your tabs — title, source and progress in real time.</p>
     </div>
     <div class="feature-card">
       <div class="icon">⏱</div>
-      <h3>Stop Timer</h3>
-      <p>Set an exact time to pause media automatically. Perfect as a sleep timer.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">⏰</div>
-      <h3>Resume Timer</h3>
-      <p>Schedule media to resume at a specific time. Use it as a morning alarm.</p>
+      <h3>Stop & Resume</h3>
+      <p>Set exact times to pause and resume media. Sleep timer and alarm clock in one.</p>
     </div>
     <div class="feature-card">
       <div class="icon">🗓</div>
       <h3>Schedule</h3>
-      <p>Open any URL and play it at a set time with chosen volume. Alarm clock for your browser.</p>
+      <p>Open any URL and play it at a set time with chosen volume.</p>
     </div>
     <div class="feature-card">
-      <div class="icon">⊡</div>
-      <h3>Journal</h3>
-      <p>Automatic history of everything you've played. One tap to add to playlist.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">≡</div>
-      <h3>Playlist</h3>
-      <p>Build a queue and play it now or schedule it for later with auto-stop.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">🔒</div>
-      <h3>100% Private</h3>
-      <p>All data stored locally in your browser. No account, no sync, no tracking.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">✨</div>
-      <h3>Free</h3>
-      <p>Completely free. No subscription, no premium tier. Powered by HUU.</p>
+      <div class="icon">📖</div>
+      <h3>Journal & Playlist</h3>
+      <p>Automatic history of everything you've played. Build queues for later.</p>
     </div>
   </div>
 </div>
@@ -208,52 +356,53 @@
 <!-- How it works -->
 <div class="section" style="padding-top: 0">
   <div class="section-title">How it works</div>
-  <div class="section-sub">Up and running in 30 seconds.</div>
+  <div class="section-sub">Up and running in seconds.</div>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <h3>Install from Chrome Web Store</h3>
-        <p>Click "Add to Chrome" — no account or sign-up required.</p>
+        <h3>Install MEDIUP</h3>
+        <p>Get the Android app from Google Play, or add the Chrome extension from the Web Store.</p>
       </div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-body">
-        <h3>Pin MEDIUP to your toolbar</h3>
-        <p>Click the puzzle icon 🧩 and pin MEDIUP for quick access.</p>
+        <h3>Grant notification access (Android)</h3>
+        <p>MEDIUP reads your current playing track via the notification listener. On Chrome, just pin the extension.</p>
       </div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-body">
-        <h3>Play any media and open MEDIUP</h3>
-        <p>Open YouTube, Spotify or any video site, start playing, then click the MEDIUP icon.</p>
+        <h3>Play any media</h3>
+        <p>Open Spotify, YouTube, VLC or any media app — MEDIUP detects what's playing automatically.</p>
       </div>
     </div>
     <div class="step">
       <div class="step-num">4</div>
       <div class="step-body">
         <h3>Set your timers or schedule</h3>
-        <p>Pick a stop time, resume time, or schedule a URL to play at any hour.</p>
+        <p>Pick a stop time, start time, or schedule a URL to open at any hour.</p>
       </div>
     </div>
   </div>
 
-  <!-- Platforms -->
+  <!-- Compatible platforms -->
   <div class="platforms">
     <div class="platform-pill">▶ YouTube</div>
     <div class="platform-pill">♪ Spotify</div>
+    <div class="platform-pill">🎵 YouTube Music</div>
+    <div class="platform-pill">📺 VLC</div>
     <div class="platform-pill">☁ SoundCloud</div>
-    <div class="platform-pill">🎬 Any video site</div>
-    <div class="platform-pill">📻 Any audio player</div>
+    <div class="platform-pill">🎬 Any media app</div>
   </div>
 </div>
 
 <!-- Coffee -->
 <div class="coffee-section">
   <h2>☕ Support MEDIUP</h2>
-  <p>MEDIUP is free and always will be. If it brings value to your day, a coffee keeps it going!</p>
+  <p>Love MEDIUP? A coffee keeps development going and new features coming!</p>
   <a href="https://buymeacoffee.com/hugouberger" target="_blank" class="btn-coffee">☕ Buy me a coffee</a>
 </div>
 

@@ -11,6 +11,7 @@
     :root {
       --bg: #0D0D1F; --surface: #1a1a2e; --border: rgba(255,255,255,0.08);
       --accent: #6C5CE7; --accent2: #a89fd8; --text: #E2E8F0; --muted: #94A3B8; --dim: #475569;
+      --green: #4ADE80;
     }
     html { scroll-behavior: smooth; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
@@ -50,6 +51,14 @@
     .highlight-box h3 { font-size: 17px; font-weight: 800; margin-bottom: 6px; }
     .highlight-box p { color: var(--muted); font-size: 14px; margin: 0; }
 
+    .platform-label {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 6px; margin-bottom: 12px;
+    }
+    .platform-label.android { background: rgba(74,222,128,0.12); color: var(--green); border: 1px solid rgba(74,222,128,0.3); }
+    .platform-label.chrome { background: rgba(108,92,231,0.12); color: var(--accent2); border: 1px solid rgba(108,92,231,0.3); }
+
     section { display: flex; flex-direction: column; gap: 12px; }
     section h2 {
       font-size: 20px; font-weight: 800;
@@ -81,15 +90,15 @@
   <div class="nav-links">
     <a href="/apps/mediup/guide.html">Guide</a>
     <a href="/apps/mediup/privacy.html" class="active">Privacy</a>
-    <a href="/webapps/">← All Web Apps</a>
+    <a href="/apps/">← Apps</a>
   </div>
 </nav>
 
 <div class="page-header">
   <div class="icon">🔒</div>
   <h1>Privacy Policy</h1>
-  <p>MEDIUP Chrome Extension</p>
-  <div class="date">Effective date: April 29, 2026</div>
+  <p>MEDIUP — Android App & Chrome Extension</p>
+  <div class="date">Effective date: May 3, 2026</div>
 </div>
 
 <div class="container">
@@ -98,64 +107,110 @@
     <div class="hl-icon">🛡️</div>
     <div>
       <h3>Your data stays on your device</h3>
-      <p>MEDIUP stores all data (journal, playlists, timer settings) exclusively in your browser's local storage using <code>chrome.storage.local</code>. No data is ever sent to any external server, no account is required, and there is no tracking of any kind.</p>
+      <p>MEDIUP stores all data (journal, playlists, timer settings) exclusively on your device. No data is ever sent to any external server, no account is required, and there is no tracking of any kind. This applies to both the Android app and the Chrome extension.</p>
     </div>
   </div>
 
+  <!-- ── ANDROID APP ────────────────────────────────────────────── -->
   <section>
-    <h2>1. What data MEDIUP stores</h2>
-    <p>MEDIUP stores the following data <strong>locally in your browser only</strong>:</p>
+    <div class="platform-label android">📱 Android App</div>
+    <h2>1. What data the Android app stores</h2>
+    <p>The MEDIUP Android app stores the following data <strong>locally on your device only</strong>:</p>
     <ul>
-      <li><strong>Journal entries</strong> — titles and URLs of media you've played, stored locally for your reference</li>
+      <li><strong>Journal entries</strong> — titles, artists and URLs of media you've played, stored in a local SQLite database</li>
       <li><strong>Playlist</strong> — tracks you've manually added to your queue</li>
-      <li><strong>Timer settings</strong> — stop/start/schedule timers you've set (cleared after firing)</li>
+      <li><strong>Schedule items</strong> — URLs and times you've scheduled for auto-launch</li>
+      <li><strong>Timer settings</strong> — stop/start timer configuration (cleared after firing)</li>
+      <li><strong>Premium status</strong> — whether you've purchased the PRO upgrade, stored in SharedPreferences</li>
+    </ul>
+    <p>This data never leaves your device.</p>
+  </section>
+
+  <section>
+    <div class="platform-label android">📱 Android App</div>
+    <h2>2. Android permissions explained</h2>
+    <ul class="permission-list">
+      <li><b>Notification Listener</b> — Reads media notifications from other apps (Spotify, YouTube, etc.) to detect what's currently playing. MEDIUP only reads the track title, artist and app name.</li>
+      <li><b>Exact Alarms (SCHEDULE_EXACT_ALARM)</b> — Fires stop/start timers and scheduled items at exact times, even when the app is in the background.</li>
+      <li><b>System Alert Window</b> — Shows the optional floating overlay button when media starts playing (PRO feature).</li>
+      <li><b>Boot Completed</b> — Restores scheduled alarms after device restart.</li>
+      <li><b>Notifications</b> — Shows timer notifications when a timer fires (e.g. "Playback stopped").</li>
+      <li><b>Internet</b> — Used only for displaying ads in the free version via Google AdMob. No user data is transmitted.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="platform-label android">📱 Android App</div>
+    <h2>3. Advertising (Android)</h2>
+    <p>The free version of the Android app displays banner ads via <strong>Google AdMob</strong>. AdMob may collect device identifiers and ad interaction data as described in <a href="https://policies.google.com/privacy" style="color:var(--accent2)">Google's Privacy Policy</a>. PRO users see no ads.</p>
+    <p>MEDIUP itself does not collect, store or transmit any personal data beyond what AdMob handles independently.</p>
+  </section>
+
+  <section>
+    <div class="platform-label android">📱 Android App</div>
+    <h2>4. In-App Purchases (Android)</h2>
+    <p>The PRO upgrade is processed through the Google Play billing system. MEDIUP does not collect or store any payment information. All billing is handled by Google.</p>
+  </section>
+
+  <!-- ── CHROME EXTENSION ───────────────────────────────────────── -->
+  <section>
+    <div class="platform-label chrome">🧩 Chrome Extension</div>
+    <h2>5. What data the Chrome extension stores</h2>
+    <p>The MEDIUP Chrome extension stores the following data <strong>locally in your browser only</strong> via <code>chrome.storage.local</code>:</p>
+    <ul>
+      <li><strong>Journal entries</strong> — titles and URLs of media you've played</li>
+      <li><strong>Playlist</strong> — tracks you've manually added to your queue</li>
+      <li><strong>Timer settings</strong> — stop/start/schedule timers (cleared after firing)</li>
       <li><strong>Now Playing state</strong> — temporary cache of currently playing media info</li>
     </ul>
-    <p>This data never leaves your device and can be cleared at any time from the Journal tab.</p>
+    <p>This data never leaves your browser and can be cleared at any time.</p>
   </section>
 
   <section>
-    <h2>2. Permissions explained</h2>
+    <div class="platform-label chrome">🧩 Chrome Extension</div>
+    <h2>6. Chrome permissions explained</h2>
     <ul class="permission-list">
-      <li><b>storage</b> — Saves your journal, playlist and timer data locally in your browser. No remote storage is used.</li>
-      <li><b>alarms</b> — Fires stop/start/schedule timers at the exact times you set, even when the popup is closed.</li>
-      <li><b>tabs</b> — Opens scheduled media URLs in browser tabs and navigates to the correct tab for playback control.</li>
-      <li><b>scripting</b> — Injects playback control scripts into YouTube, Spotify and SoundCloud tabs to play/pause media on your command.</li>
-      <li><b>notifications</b> — Shows desktop notifications when a timer fires (e.g. "Playback stopped at 23:00").</li>
-      <li><b>Host permissions (YouTube, Spotify, SoundCloud, all sites)</b> — Required to detect and control media playback. The generic host permission (<code>*://*/*</code>) allows MEDIUP to detect media on any website, not just the listed platforms.</li>
+      <li><b>storage</b> — Saves journal, playlist and timer data locally in your browser.</li>
+      <li><b>alarms</b> — Fires timers at exact times, even when the popup is closed.</li>
+      <li><b>tabs</b> — Opens scheduled URLs and navigates to the correct tab for playback control.</li>
+      <li><b>scripting</b> — Injects playback control scripts into YouTube, Spotify and SoundCloud tabs.</li>
+      <li><b>notifications</b> — Shows desktop notifications when a timer fires.</li>
+      <li><b>Host permissions</b> — Detects and controls media on YouTube, Spotify, SoundCloud and other sites.</li>
     </ul>
   </section>
 
+  <!-- ── SHARED SECTIONS ────────────────────────────────────────── -->
   <section>
-    <h2>3. Data sharing</h2>
-    <p>MEDIUP does <strong>not</strong>:</p>
+    <h2>7. Data sharing</h2>
+    <p>MEDIUP (both Android and Chrome) does <strong>not</strong>:</p>
     <ul>
       <li>Collect, transmit or sell any user data</li>
-      <li>Use analytics or tracking services</li>
+      <li>Use analytics or tracking services (except AdMob in free Android version)</li>
       <li>Require account creation or login</li>
-      <li>Access your browsing history beyond detecting active media</li>
-      <li>Read or store the content of web pages you visit</li>
+      <li>Access your browsing history or contacts</li>
+      <li>Read or store content of web pages or media files</li>
     </ul>
   </section>
 
   <section>
-    <h2>4. Third-party services</h2>
-    <p>MEDIUP interacts with YouTube, Spotify and SoundCloud solely to control media playback (play, pause, volume). It does not access your accounts, playlists, subscriptions or any personal data from these services. All interaction happens locally via the browser tab.</p>
+    <h2>8. Third-party services</h2>
+    <p>MEDIUP interacts with YouTube, Spotify, YouTube Music, VLC and SoundCloud solely to control media playback (play, pause, detect track info). It does not access your accounts, subscriptions or personal data from these services.</p>
   </section>
 
   <section>
-    <h2>5. Children's privacy</h2>
-    <p>MEDIUP does not knowingly collect any information from anyone, including children under 13. As no data is collected at all, this extension is safe for all ages.</p>
+    <h2>9. Children's privacy</h2>
+    <p>MEDIUP does not knowingly collect any information from anyone, including children under 13. As no personal data is collected, both versions are safe for all ages.</p>
   </section>
 
   <section>
-    <h2>6. Changes to this policy</h2>
-    <p>If this privacy policy changes, the updated version will be published at this URL with a new effective date. Significant changes will be noted in the Chrome Web Store release notes.</p>
+    <h2>10. Changes to this policy</h2>
+    <p>If this privacy policy changes, the updated version will be published at this URL with a new effective date. Significant changes will be noted in release notes on Google Play and the Chrome Web Store.</p>
   </section>
 
   <section>
-    <h2>7. Contact</h2>
-    <p>Questions about this privacy policy? Reach out via the support page or leave a review on the Chrome Web Store.</p>
+    <h2>11. Contact</h2>
+    <p>Questions about this privacy policy?</p>
+    <p><a href="mailto:huuberger1@gmail.com" style="color: var(--accent2);">huuberger1@gmail.com</a></p>
     <p><a href="https://hugouberger.com" style="color: var(--accent2);">hugouberger.com</a></p>
   </section>
 
