@@ -58,6 +58,13 @@
       border-color: rgba(255,235,59,0.3);
       transform: translateY(-4px);
     }
+    .app-card { position: relative; }
+    .card-link {
+      position: absolute; inset: 0; z-index: 1;
+      border-radius: 20px; text-decoration: none;
+    }
+    .gplay { position: relative; z-index: 2; display: inline-block; margin-top: 16px; }
+    .gplay img { display: block; }
     .app-icon {
       font-size: 40px; margin-bottom: 16px;
     }
@@ -122,7 +129,8 @@
 <div class="grid">
 
   <!-- Time Spender -->
-  <a class="app-card" href="timespender/">
+  <div class="app-card">
+    <a class="card-link" href="timespender/" aria-label="Time Spender"></a>
     <div class="app-icon">⏱</div>
     <h2>Time Spender</h2>
     <div class="tagline">Know where your time goes</div>
@@ -131,12 +139,18 @@
       <span class="btn btn-primary">Learn more →</span>
       <span class="btn btn-outline">Guide</span>
     </div>
-  </a>
+    <a class="gplay" href="https://play.google.com/store/apps/details?id=com.timespender.time_spender"
+       target="_blank" rel="noopener">
+      <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+           alt="Get it on Google Play" height="52">
+    </a>
+  </div>
 
   <!-- MEDIUP -->
-  <a class="app-card" href="mediup/" style="border-color: rgba(108,92,231,0.2);"
+  <div class="app-card" style="border-color: rgba(108,92,231,0.2);"
      onmouseover="this.style.borderColor='rgba(108,92,231,0.5)'"
      onmouseout="this.style.borderColor='rgba(108,92,231,0.2)'">
+    <a class="card-link" href="mediup/" aria-label="MEDIUP"></a>
     <div class="app-icon">🎵</div>
     <h2 style="color:#a89fd8;">MEDIUP</h2>
     <div class="tagline">Media Scheduler for Android</div>
@@ -145,10 +159,16 @@
       <span class="btn btn-primary" style="background:#6C5CE7;color:#fff;">Learn more →</span>
       <span class="btn btn-outline">Guide</span>
     </div>
-  </a>
+    <a class="gplay" href="https://play.google.com/store/apps/details?id=com.huudev.mediup"
+       target="_blank" rel="noopener">
+      <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+           alt="Get it on Google Play" height="52">
+    </a>
+  </div>
 
   <!-- NaviSign -->
-  <a class="app-card" href="navisign/">
+  <div class="app-card">
+    <a class="card-link" href="navisign/" aria-label="NaviSign"></a>
     <div class="app-icon">⚓</div>
     <h2>NaviSign</h2>
     <div class="tagline">Professional Maritime Reference</div>
@@ -157,13 +177,12 @@
       <span class="btn btn-primary">Learn more →</span>
       <span class="btn btn-outline">🌐 Guide</span>
     </div>
-    <a href="https://play.google.com/store/apps/details?id=com.navisign.app"
-       onclick="event.stopPropagation()"
-       target="_blank" style="display:inline-block; margin-top:16px;">
+    <a class="gplay" href="https://play.google.com/store/apps/details?id=com.navisign.app"
+       target="_blank" rel="noopener">
       <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
            alt="Get it on Google Play" height="52">
     </a>
-  </a>
+  </div>
 
 </div>
 
